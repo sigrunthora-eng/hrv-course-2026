@@ -50,6 +50,17 @@ nav {
 .nav-link:hover { background: var(--surface); color: var(--text); }
 .nav-link.active { background: var(--surface2); color: var(--accent); font-weight: 600; }
 
+/* BACK BUTTON */
+.back-bar { padding: 8px 28px 0; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .78rem; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; transition: all .15s;
+  background: transparent;
+}
+.back-btn:hover { color: var(--text); border-color: var(--accent); background: var(--surface); }
+
 /* PAGE WRAPPER */
 .page { max-width: 940px; margin: 0 auto; padding: 36px 24px 60px; }
 
@@ -105,7 +116,9 @@ nav {
 .team-num { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#006D77,#38b2ac); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; color:#fff; flex-shrink:0; }
 .team-topic { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:2px; }
 .team-ref { font-size:.76rem; color:var(--muted); font-style:italic; }
-.team-body { padding:0 20px 16px; }
+.team-body { padding:12px 20px 16px; }
+.member-list { display:flex; flex-wrap:wrap; gap:8px; }
+.member-name { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:5px 14px; font-size:.83rem; color:var(--text); }
 
 /* FIELD */
 .f { display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
@@ -180,12 +193,15 @@ input[type=range] { flex:1; accent-color:var(--accent); }
     <span class="nav-brand-text">HRV Biofeedback Course</span>
   </a>
   <div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a>
+<a href="curriculum.html" class="nav-link">🎓 Curriculum</a>
+<a href="exercises.html" class="nav-link">🧬 Techniques</a>
 <a href="teams.html" class="nav-link">👥 Teams</a>
 <a href="individual.html" class="nav-link active">📓 My Workbook</a>
 <a href="team-workbook.html" class="nav-link">📋 Team Workbook</a>
 <a href="readings.html" class="nav-link">📚 Readings</a>
 </div>
 </nav>
+<div class="back-bar"><a class="back-btn" href="index.html" onclick="if(document.referrer&&document.referrer.includes(location.hostname)){event.preventDefault();history.back()}">← Back</a></div>
 
 <div class="hero" style="padding:36px 24px 28px">
   <div class="badge">Individual Practice · 5 weeks</div>
