@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Workbook — Applied Psychophysiology & Biofeedback</title>
+<style>
+  :root {
+    --bg: #0b1829;
+    --surface: #132338;
+    --surface2: #1a2f4a;
+    --border: #1e3555;
+    --text: #ddeaf7;
+    --muted: #6a94b8;
+    --accent: #38b2ac;
+    --accent2: #63d0ff;
+    --teal-light: #81e6d9;
+    --coral: #e76f51;
+    --green: #06a078;
+    --purple: #9f7aea;
+    --sidebar-w: 220px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: #0a1624;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 12px;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #1a6fa3, #38b2ac);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+
+  .logo-text { font-size: 0.78rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .logo-sub { font-size: 0.68rem; color: var(--muted); }
+
+  .team-input-wrap { margin-bottom: 18px; }
+  .team-input-wrap label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); display: block; margin-bottom: 5px; }
+  .team-input-wrap input {
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 7px 10px; font-size: 0.82rem;
+    outline: none;
+  }
+  .team-input-wrap input:focus { border-color: var(--accent); }
+
+  .nav-section-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); padding: 0 4px; margin: 14px 0 6px;
+  }
+
+  .nav-btn {
+    width: 100%; text-align: left; background: transparent;
+    border: none; color: var(--muted); padding: 8px 10px;
+    border-radius: 8px; cursor: pointer; font-size: 0.82rem;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.15s; margin-bottom: 2px;
+  }
+  .nav-btn:hover { background: var(--surface); color: var(--text); }
+  .nav-btn.active { background: var(--surface2); color: var(--accent); font-weight: 600; }
+  .nav-btn .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+  .sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+
+  .btn-save, .btn-export, .btn-clear {
+    width: 100%; padding: 9px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none;
+    transition: all 0.15s;
+  }
+  .btn-save { background: linear-gradient(135deg, #1a6fa3, #38b2ac); color: #fff; }
+  .btn-save:hover { opacity: 0.9; }
+  .btn-export { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+  .btn-export:hover { color: var(--text); background: var(--surface2); }
+  .btn-clear { background: transparent; color: #e76f5166; border: 1px solid #e76f5133; font-size: 0.72rem; padding: 6px; }
+  .btn-clear:hover { color: var(--coral); border-color: var(--coral); }
+
+  .save-indicator {
+    font-size: 0.68rem; color: var(--accent); text-align: center;
+    height: 16px; transition: opacity 0.3s;
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 32px 40px;
+    max-width: 900px;
+  }
+
+  /* ── COVER ── */
+  #cover {
+    min-height: 80vh;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: rgba(56,178,172,0.12);
+    border: 1px solid rgba(56,178,172,0.25);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 0.72rem; color: var(--teal-light);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px;
+  }
+
+  .cover-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+    color: var(--text); line-height: 1.15; margin-bottom: 8px;
+  }
+  .cover-title span { color: var(--accent); }
+
+  .cover-sub { font-size: 1rem; color: var(--muted); margin-bottom: 36px; }
+
+  .cover-fields {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    max-width: 560px; margin-bottom: 36px;
+  }
+
+  .cover-info {
+    background: var(--surface); border-radius: 14px;
+    padding: 20px; border: 1px solid var(--border);
+    max-width: 560px;
+  }
+  .cover-info h3 { color: var(--accent); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .cover-info ul { list-style: none; }
+  .cover-info li { padding: 5px 0; color: var(--muted); font-size: 0.85rem; border-bottom: 1px solid var(--border); }
+  .cover-info li:last-child { border-bottom: none; }
+  .cover-info li strong { color: var(--text); }
+
+  /* ── MEETING SECTION ── */
+  .meeting-section { animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .meeting-banner {
+    display: flex; align-items: stretch; gap: 0;
+    border-radius: 14px; overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .meeting-id {
+    background: #004B55; color: #fff;
+    padding: 18px 20px; font-size: 1.5rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    min-width: 90px; letter-spacing: 0.02em;
+  }
+
+  .meeting-info { background: #006D77; padding: 14px 22px; flex: 1; }
+  .meeting-title { color: #fff; font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+  .meeting-meta { color: rgba(200,240,240,0.8); font-size: 0.82rem; }
+
+  .meeting-body { display: flex; flex-direction: column; gap: 20px; }
+
+  /* ── MEET META GRID ── */
+  .meet-meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 8px;
+  }
+
+  /* ── ACTIVITY ── */
+  .activity {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .act-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 18px;
+    background: var(--surface2);
+    border-bottom: 2px solid var(--act-color, #38b2ac);
+  }
+
+  .act-label { display: flex; flex-direction: column; gap: 2px; }
+  .act-num { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .act-title { font-size: 0.9rem; font-weight: 700; color: var(--act-color, #38b2ac); }
+
+  .act-meta { display: flex; align-items: center; gap: 10px; }
+  .act-dur { font-size: 0.75rem; color: var(--muted); }
+
+  .ev-btn {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted); border-radius: 6px; padding: 4px 9px;
+    font-size: 0.72rem; cursor: pointer; transition: all 0.15s;
+  }
+  .ev-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+  .evidence-panel {
+    display: none; padding: 14px 18px;
+    background: rgba(56,178,172,0.05);
+    border-bottom: 1px solid rgba(56,178,172,0.15);
+    font-size: 0.82rem; color: var(--muted);
+    line-height: 1.7;
+  }
+  .evidence-panel.open { display: block; }
+  .evidence-panel p { margin-bottom: 8px; }
+  .evidence-panel p:last-child { margin-bottom: 0; }
+  .evidence-panel strong { color: var(--teal-light); }
+  .evidence-panel em { color: var(--muted); font-style: italic; font-size: 0.78rem; }
+
+  .act-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── FIELDS ── */
+  .field, .field-wide { display: flex; flex-direction: column; gap: 4px; }
+
+  .field label, .field-wide label {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+
+  .field input, .field textarea,
+  .field-wide input, .field-wide textarea {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 12px;
+    font-size: 0.88rem; font-family: inherit; resize: vertical;
+    outline: none; transition: border-color 0.15s;
+    width: 100%;
+  }
+  .field input:focus, .field textarea:focus,
+  .field-wide input:focus, .field-wide textarea:focus {
+    border-color: var(--accent);
+    background: rgba(56,178,172,0.05);
+  }
+
+  /* ── MEMBER BLOCK ── */
+  .member-block {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .member-tag {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 6px; padding: 6px 10px;
+    font-size: 0.7rem; font-weight: 700; white-space: nowrap;
+    letter-spacing: 0.05em; margin-top: 1px; flex-shrink: 0;
+  }
+  .member-block .field, .member-block .field-wide { flex: 1; }
+
+  /* ── FACILITATOR NOTE ── */
+  .facilitator-note {
+    background: rgba(231,111,81,0.08);
+    border: 1px solid rgba(231,111,81,0.2);
+    border-left: 3px solid var(--coral);
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .fac-icon { font-size: 0.72rem; font-weight: 700; color: var(--coral); display: block; margin-bottom: 4px; letter-spacing: 0.05em; }
+  .facilitator-note p { font-size: 0.85rem; color: var(--muted); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: rgba(56,178,172,0.07);
+    border: 1px solid rgba(56,178,172,0.18);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .info-box strong { color: var(--teal-light); font-size: 0.8rem; display: block; margin-bottom: 6px; }
+  .info-box ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .info-box li { font-size: 0.84rem; color: var(--muted); padding-left: 12px; position: relative; }
+  .info-box li::before { content: '·'; position: absolute; left: 0; color: var(--accent); }
+
+  /* ── INST ── */
+  .inst { font-size: 0.85rem; color: var(--muted); }
+  .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; }
+
+  /* ── DATA TABLE ── */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  .data-table th {
+    background: #006D77; color: #fff; text-align: left;
+    padding: 8px 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .data-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+  .data-table tr:nth-child(even) td { background: rgba(56,178,172,0.04); }
+  .data-table input, .data-table textarea {
+    width: 100%; background: transparent; border: none;
+    color: var(--text); font-size: 0.84rem; font-family: inherit;
+    padding: 2px 0; outline: none; resize: none;
+  }
+  .data-table input:focus, .data-table textarea:focus { border-bottom: 1px solid var(--accent); }
+  .data-table select {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 3px 6px; font-size: 0.8rem;
+  }
+
+  /* ── HRV SECTION ── */
+  .hrv-section {
+    background: linear-gradient(135deg, #0d2540 0%, #0e2d3a 100%);
+    border: 1px solid rgba(56,178,172,0.2);
+    border-radius: 14px; overflow: hidden;
+  }
+  .hrv-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    background: rgba(56,178,172,0.1);
+    border-bottom: 1px solid rgba(56,178,172,0.15);
+  }
+  .hrv-icon { font-size: 1.1rem; color: #fc8181; }
+  .hrv-title { font-size: 0.8rem; font-weight: 700; color: var(--teal-light); letter-spacing: 0.05em; }
+
+  .hrv-body { display: flex; align-items: center; gap: 32px; padding: 24px; flex-wrap: wrap; }
+
+  .bubble-wrap { position: relative; width: 160px; height: 160px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .bubble-outer {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,195,247,0.06) 0%, transparent 70%);
+    border: 1px solid rgba(79,195,247,0.12);
+  }
+  .bubble {
+    width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #4fc3f7, #1a6fa3);
+    box-shadow: 0 0 30px rgba(79,195,247,0.25);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: transform 0.3s ease;
+    cursor: default;
+  }
+  .bubble.inhaling { animation: bubbleIn var(--in-dur,4s) ease-in-out forwards; background: radial-gradient(circle at 35% 35%, #63d0ff, #2d7ab5); box-shadow: 0 0 50px rgba(99,208,255,0.35); }
+  .bubble.exhaling { animation: bubbleOut var(--out-dur,6s) ease-in-out forwards; background: radial-gradient(circle at 35% 35%, #38b2ac, #1a6fa3); }
+  @keyframes bubbleIn { from { transform: scale(1); } to { transform: scale(1.3); } }
+  @keyframes bubbleOut { from { transform: scale(1.3); } to { transform: scale(1); } }
+
+  .bubble-phase { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.9); letter-spacing: 0.04em; }
+  .bubble-count { font-size: 1.5rem; font-weight: 700; color: #fff; line-height: 1; }
+
+  .hrv-controls { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 180px; }
+  .hrv-timer { font-size: 2.2rem; font-weight: 300; color: var(--accent); letter-spacing: 0.05em; }
+  .hrv-progress-wrap { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+  .hrv-progress { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; width: 0%; transition: width 1s linear; }
+
+  .hrv-btn-row { display: flex; gap: 8px; }
+  .btn-start {
+    padding: 9px 22px; border-radius: 8px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #2d7ab5, #38b2ac); color: #fff;
+    font-size: 0.85rem; font-weight: 600; transition: all 0.15s;
+  }
+  .btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-reset {
+    padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); font-size: 0.85rem; cursor: pointer;
+  }
+  .btn-reset:hover { background: var(--surface2); color: var(--text); }
+
+  .hrv-hint { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+
+  .hrv-reflection { padding: 16px 20px; border-top: 1px solid rgba(56,178,172,0.12); display: flex; flex-direction: column; gap: 10px; }
+
+  /* ── AFTER BOX ── */
+  .after-box {
+    background: rgba(99,208,255,0.06); border: 1px solid rgba(99,208,255,0.15);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .after-title { font-size: 0.8rem; font-weight: 700; color: var(--accent2); margin-bottom: 10px; }
+  .after-box ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .after-box li { font-size: 0.84rem; color: var(--muted); padding-left: 16px; position: relative; }
+  .after-box li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+
+  /* ── DONE BOX ── */
+  .done-box {
+    background: rgba(72,187,120,0.1); border: 1px solid rgba(72,187,120,0.25);
+    border-radius: 10px; padding: 16px 20px; text-align: center;
+    font-size: 0.9rem; color: #68d391; font-weight: 600; margin-top: 10px;
+  }
+
+  /* ── APPENDIX ── */
+  .appendix-week { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .appendix-week:last-child { border-bottom: none; }
+  .week-label { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+  .evidence-full { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .evidence-full:last-child { border-bottom: none; }
+  .evidence-full h3 { color: var(--teal-light); font-size: 0.95rem; margin-bottom: 8px; }
+  .evidence-full p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 6px; }
+  .evidence-full .ref { font-size: 0.78rem; font-style: italic; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; color: #111; display: block; font-size: 11pt; }
+    #sidebar { display: none !important; }
+    #main { margin-left: 0; padding: 10mm; max-width: none; }
+    .meeting-section { display: block !important; page-break-before: always; }
+    #cover { page-break-before: avoid; }
+    .meeting-banner { background: #006D77 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .meeting-id, .meeting-info { color: #fff !important; }
+    .act-header { background: #f5f5f5 !important; border-bottom: 2px solid #888 !important; }
+    .act-title { color: #333 !important; }
+    .ev-btn, .btn-save, .btn-export, .btn-clear, .hrv-btn-row, .sidebar-footer { display: none !important; }
+    .evidence-panel { display: none !important; }
+    input, textarea, select { border: none !important; border-bottom: 1px solid #bbb !important; background: transparent !important; color: #111 !important; }
+    .data-table th { background: #006D77 !important; color: #fff !important; }
+    .bubble-wrap, .hrv-controls { display: none !important; }
+    .hrv-header { background: #e0f4f2 !important; }
+    .hrv-title { color: #006D77 !important; }
+    .member-tag { background: #eee !important; color: #555 !important; }
+    .info-box { background: #f5f5f5 !important; border-left: 3px solid #888 !important; }
+    .facilitator-note { background: #fff8f5 !important; }
+    .after-box { background: #f0f9ff !important; }
+    .done-box { background: #f0fff4 !important; color: #276749 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">♥</div>
+    <div>
+      <div class="logo-text">Team Workbook</div>
+      <div class="logo-sub">HRV Biofeedback Course</div>
+    </div>
+  </div>
+
+  <div class="team-input-wrap">
+    <label>Team name</label>
+    <input type="text" id="team-name" placeholder="e.g. Team Autonomic" oninput="save()">
+  </div>
+
+  <div class="nav-section-label">Meetings</div>
+  <button class="nav-btn" data-target="cover" onclick="showSection('cover')"><span class="nav-dot"></span>Cover</button>
+  <button class="nav-btn" data-target="m0" onclick="showSection('m0')"><span class="nav-dot"></span>Meeting 0 — Team Launch</button>
+  <button class="nav-btn" data-target="m1" onclick="showSection('m1')"><span class="nav-dot"></span>Meeting 1 — After Session 1</button>
+  <button class="nav-btn" data-target="m2" onclick="showSection('m2')"><span class="nav-dot"></span>Meeting 2 — After Teaching</button>
+  <button class="nav-btn" data-target="m3" onclick="showSection('m3')"><span class="nav-dot"></span>Meeting 3 — Post On-site</button>
+  <button class="nav-btn" data-target="m4" onclick="showSection('m4')"><span class="nav-dot"></span>Meeting 4 — Report Week</button>
+  <button class="nav-btn" data-target="m5" onclick="showSection('m5')"><span class="nav-dot"></span>Meeting 5 — Final & Celebration</button>
+
+  <div class="nav-section-label">Appendices</div>
+  <button class="nav-btn" data-target="appendix-b" onclick="showSection('appendix-b')"><span class="nav-dot"></span>Check-in Pairs Log</button>
+  <button class="nav-btn" data-target="appendix-c" onclick="showSection('appendix-c')"><span class="nav-dot"></span>Evidence Base</button>
+
+  <div class="sidebar-footer">
+    <div id="save-indicator" class="save-indicator"></div>
+    <button class="btn-save" onclick="_doSave()">💾 Save now</button>
+    <button class="btn-export" onclick="exportPDF()">📄 Export PDF</button>
+    <button class="btn-clear" onclick="clearData()">Clear all data</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- COVER -->
+  <div id="cover">
+    <div class="cover-badge">NeurotechEU Summer School · May–June 2026</div>
+    <h1 class="cover-title">Team<br><span>Workbook</span></h1>
+    <p class="cover-sub">Applied Psychophysiology &amp; Biofeedback · Interactive Workspace</p>
+
+    <div class="cover-fields">
+      <div class="field"><label>Team name</label><input type="text" id="cover_team" placeholder="e.g. Team Autonomic" oninput="save()"></div>
+      <div class="field"><label>Team members</label><input type="text" id="cover_members" placeholder="1. ___ 2. ___ 3. ___ 4. ___" oninput="save()"></div>
+      <div class="field"><label>Cohort / Programme</label><input type="text" id="cover_cohort" placeholder="" oninput="save()"></div>
+      <div class="field"><label>Instructor</label><input type="text" id="cover_instructor" placeholder="Sigrún Þóra Sveinsdóttir" oninput="save()"></div>
+    </div>
+
+    <div class="cover-info">
+      <h3>What this workbook is</h3>
+      <ul>
+        <li><strong>Meeting 0</strong> — Team Launch &amp; Course Prep (May 14–20)</li>
+        <li><strong>Meeting 1</strong> — After Session 1 (May 21–26)</li>
+        <li><strong>Meeting 2</strong> — After Team Teaching (May 27–31)</li>
+        <li><strong>Meeting 3</strong> — Post On-site Intensive (June 6–10)</li>
+        <li><strong>Meeting 4</strong> — Report &amp; Presentation Week (June 10–15)</li>
+        <li><strong>Meeting 5</strong> — Final Meeting &amp; Celebration (June 15–16)</li>
+        <li><strong>Appendix B</strong> — Check-in Pairs Log</li>
+        <li><strong>Appendix C</strong> — Evidence Base</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MEETING 0 -->
+  
+<section class="meeting-section" id="meeting-m0" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m0</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 0: TEAM LAUNCH & COURSE PREP</div>
+      <div class="meeting-meta">May 14–20 · before Session 1 · 65 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m0_date" placeholder="e.g. May 14" oninput="save()"></div>
+  <div class="field"><label>Platform</label><input type="text" id="m0_platform" placeholder="Zoom / Teams / Meet" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m0_facilitator" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Notetaker</label><input type="text" id="m0_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<div class="meet-meta-grid">
+  <div class="field-wide"><label>Present (names)</label><input type="text" id="m0_present" placeholder="1. ___ 2. ___ 3. ___ 4. ___" oninput="save()"></div>
+</div>
+<div class="hrv-section" id="hrv-m0">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m0">
+        <div class="bubble-phase" id="bphase-m0">Ready</div>
+        <div class="bubble-count" id="bcount-m0"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m0">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m0"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m0')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m0')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m0_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m0_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m0_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m0_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-1">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 1</span>
+      <span class="act-title">REAL INTRODUCTIONS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('1')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-1">
+<p><strong>Why real introductions matter:</strong> Teams with higher psychological safety — where members know each other as people — show greater creativity and fewer blind spots (Edmondson, 1999). Question 3 models that limitations are safe to name.</p>
+<p><em>Edmondson, A. (1999). Psychological safety and learning behavior in work teams. Administrative Science Quarterly, 44(2), 350–383.</em></p></div>
+  <div class="act-body">
+    
+<div class="facilitator-note"><span class="fac-icon">🎯 FACILITATOR</span><p>Question 3 is the most important — it models vulnerability. If the group is quiet, go first yourself. Do not move on until everyone has answered all three.</p></div>
+<p class="inst">Each person answers (2–3 min each): Where you're from · What drew you to this course · One thing that tends to go well in team work, and one that tends to be harder.</p>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>What drew them / what is harder for them:</label><textarea id="m0_intro_m1" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>What drew them / what is harder for them:</label><textarea id="m0_intro_m2" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>What drew them / what is harder for them:</label><textarea id="m0_intro_m3" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>What drew them / what is harder for them:</label><textarea id="m0_intro_m4" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-2">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 2</span>
+      <span class="act-title">STRENGTHS & WORKING STYLES</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Go around. Each person names one strength and one type of support that helps them thrive in a team.</p>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Strength + support needed:</label><textarea id="m0_strengths_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Strength + support needed:</label><textarea id="m0_strengths_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Strength + support needed:</label><textarea id="m0_strengths_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Strength + support needed:</label><textarea id="m0_strengths_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-3">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 3</span>
+      <span class="act-title">TEAM CHARTER</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('3')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-3">
+<p><strong>Team charters reduce conflict:</strong> Agreeing on norms early significantly reduces misunderstandings later. Teams that set explicit expectations at the start report higher cohesion and lower dropout (Hackman, 2002).</p>
+<p><em>Hackman, J.R. (2002). Leading teams. Harvard Business School Press.</em></p></div>
+  <div class="act-body">
+    
+<div class="field"><label>Our communication platform and response-time agreement:</label><textarea id="m0_charter_comm" rows="2" placeholder="e.g. WhatsApp — reply within 24h" oninput="save()"></textarea></div>
+<div class="field"><label>Our weekly recurring meeting time:</label><input type="text" id="m0_charter_time" placeholder="" oninput="save()"></div>
+<div class="field"><label>How we make decisions:</label><textarea id="m0_charter_decisions" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>What we do if someone misses a deadline:</label><textarea id="m0_charter_deadlines" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>What success looks like for each of us (one sentence each):</label><textarea id="m0_charter_success" rows="3" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>How we will handle disagreement:</label><textarea id="m0_charter_conflict" rows="2" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-4">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 4</span>
+      <span class="act-title">CHECK-IN PAIRS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('4')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-4">
+<p><strong>Check-in partners increase follow-through:</strong> Having a named partner who will ask "Did you do your practice?" activates social accountability. Regular brief check-ins are more effective than accountability to a group or instructor (Prestwich et al., 2012).</p>
+<p><em>Prestwich, A., et al. (2012). Randomized controlled trial of collaborative implementation intentions. Health Psychology, 31(1), 67–75.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Setting up check-in pairs</strong><ul><li>Two pairs of 2 people each.</li><li>Between meetings: one brief message, one question — 'Did you do your HRV practice?'</li><li>Agree now on WHEN and HOW (WhatsApp / Teams / text).</li><li>Facilitator: ask each pair directly in the main call — takes 2 minutes.</li></ul></div>
+<div class="field"><label>Pair A — names + when/how they will check in:</label><textarea id="m0_pairA" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Pair B — names + when/how they will check in:</label><textarea id="m0_pairB" rows="2" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-5">
+  <div class="act-header" style="--act-color:#6C3C8C">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 5</span>
+      <span class="act-title">COURSE PREP & TEACHING TOPIC</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Read your teaching topic aloud together (2 min). Divide it into 4 subtopics — one per person. Each person researches their part before Meeting 1.</p>
+<div class="field-wide"><label>Teaching topic assigned to us:</label><input type="text" id="m0_topic" placeholder="" oninput="save()"></div>
+<p class="section-label" style="margin-top:16px">Research tasks — one per person:</p>
+
+<table class="data-table" id="research-table">
+  <thead><tr><th>Member</th><th>Subtopic / research angle</th></tr></thead>
+  <tbody>
+    <tr><td>Member 1</td><td><input type="text" id="m0_r1" oninput="save()" placeholder="…"></td></tr>
+    <tr><td>Member 2</td><td><input type="text" id="m0_r2" oninput="save()" placeholder="…"></td></tr>
+    <tr><td>Member 3</td><td><input type="text" id="m0_r3" oninput="save()" placeholder="…"></td></tr>
+    <tr><td>Member 4</td><td><input type="text" id="m0_r4" oninput="save()" placeholder="…"></td></tr>
+  </tbody>
+</table>
+<p class="inst" style="margin-top:8px">Also: review course timeline · confirm weekly meeting time.</p>
+  </div>
+</div>
+<div class="activity" id="act-6">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY 6</span>
+      <span class="act-title">ROLE ROTATION + CLOSING</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Assign roles for all meetings now — rotate so everyone leads.</p>
+
+<table class="data-table">
+  <thead><tr><th>Meeting</th><th>Facilitator</th><th>Notetaker</th><th>Tech Lead</th></tr></thead>
+  <tbody>
+    <tr><td>Meeting 1</td><td><input type="text" id="role_f1" oninput="save()"></td><td><input type="text" id="role_n1" oninput="save()"></td><td><input type="text" id="role_t1" oninput="save()"></td></tr>
+    <tr><td>Meeting 2</td><td><input type="text" id="role_f2" oninput="save()"></td><td><input type="text" id="role_n2" oninput="save()"></td><td><input type="text" id="role_t2" oninput="save()"></td></tr>
+    <tr><td>Meeting 3</td><td><input type="text" id="role_f3" oninput="save()"></td><td><input type="text" id="role_n3" oninput="save()"></td><td><input type="text" id="role_t3" oninput="save()"></td></tr>
+    <tr><td>Meeting 4</td><td><input type="text" id="role_f4" oninput="save()"></td><td><input type="text" id="role_n4" oninput="save()"></td><td><input type="text" id="role_t4" oninput="save()"></td></tr>
+    <tr><td>Meeting 5</td><td><input type="text" id="role_f5" oninput="save()"></td><td><input type="text" id="role_n5" oninput="save()"></td><td><input type="text" id="role_t5" oninput="save()"></td></tr>
+  </tbody>
+</table>
+<div class="field-wide"><label>One word from each person to close:</label><input type="text" id="m0_closing" placeholder="Member 1: __ · Member 2: __ · Member 3: __ · Member 4: __" oninput="save()"></div>
+  </div>
+</div>
+<div class="after-box">
+  <div class="after-title">📤 AFTER THE MEETING — Notetaker sends to the group:</div>
+  <ul>
+    <li>Team Charter summary (paste from above)</li>
+    <li>Role rotation schedule</li>
+    <li>Check-in pair assignments and check-in plan</li>
+    <li>Teaching topic + research task for each person</li>
+    <li>Post confirmation on Canvas that Meeting 0 is complete</li>
+  </ul>
+</div>
+  </div>
+</section>
+
+  <!-- MEETING 1 -->
+  
+<section class="meeting-section" id="meeting-m1" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m1</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 1: AFTER SESSION 1</div>
+      <div class="meeting-meta">May 21–26 · 60 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m1_date" placeholder="" oninput="save()"></div> <div class="field"><label>Platform</label><input type="text" id="m1_platform" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m1_facilitator" placeholder="" oninput="save()"></div> <div class="field"><label>Notetaker</label><input type="text" id="m1_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<div class="hrv-section" id="hrv-m1">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m1">
+        <div class="bubble-phase" id="bphase-m1">Ready</div>
+        <div class="bubble-count" id="bcount-m1"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m1">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m1"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m1')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m1')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m1_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m1_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m1_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m1_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-A">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY A</span>
+      <span class="act-title">SESSION 1 DEBRIEF</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 8 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Each person briefly: what stayed with you from Session 1? One thing that surprised you, or one thing you want to try.</p>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>What stayed with me from Session 1:</label><textarea id="m1_debrief_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>What stayed with me from Session 1:</label><textarea id="m1_debrief_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>What stayed with me from Session 1:</label><textarea id="m1_debrief_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>What stayed with me from Session 1:</label><textarea id="m1_debrief_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-B">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY B</span>
+      <span class="act-title">HRV PRACTICE: FIRST REFLECTIONS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('B')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-B">
+<p><strong>Resonance frequency breathing:</strong> Breathing at ~6 breaths/min (4s in, 6s out) maximises heart rate variability by synchronising respiratory and cardiac rhythms. Regular practice (20 min/day) is associated with reduced anxiety, better stress regulation, and improved autonomic flexibility.</p>
+<p><em>Lehrer, P., & Gevirtz, R. (2014). Heart rate variability biofeedback. Frontiers in Psychology, 5, 756.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Go-around</strong><ul><li>Each person: How often did you practice this week? (0–7 days)</li><li>What did you notice? One sentence.</li><li>No evaluation — just observation.</li></ul></div>
+<div class="field"><label>Key themes or observations from the group:</label><textarea id="m1_hrv_themes" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-C">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY C</span>
+      <span class="act-title">STATUS UPDATE FROM CHECK-IN PAIRS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('C')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-C">
+<p><strong>Vicarious mastery (Bandura, 1997):</strong> Observing someone similar to you succeed increases your own self-efficacy. When peers share specific moments where the practice worked, it raises the group's collective belief that it is achievable — more powerfully than instructor demonstrations.</p>
+<p><em>Bandura, A. (1997). Self-efficacy: The exercise of control. Freeman.</em></p></div>
+  <div class="act-body">
+    
+<p class="inst">Status update from each check-in pair — what came up between meetings?</p>
+<div class="field"><label>Pair A — what came up / commitment for next week:</label><textarea id="m1_pairA_update" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Pair B — what came up / commitment for next week:</label><textarea id="m1_pairB_update" rows="2" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-D">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY D</span>
+      <span class="act-title">BARRIERS & SUPPORT — MI PEER APPROACH</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('D')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-D">
+<p><strong>Motivational Interviewing principles:</strong> MI uses open questions, reflective listening, and affirming change talk. When peers (not just instructors) ask "What would make this easier?" the effect on motivation is amplified — people feel heard, not lectured.</p>
+<p><em>Miller, W.R., & Rollnick, S. (2013). Motivational interviewing (3rd ed.). Guilford Press.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Open questions (pick 1–2)</strong><ul><li>What makes it harder than you expected?</li><li>What would make it easier?</li><li>On a scale 0–10, how important is this to you right now?</li></ul></div>
+<div class="field"><label>Main barriers named this week:</label><textarea id="m1_barriers" rows="3" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>One adjustment each person will try next week:</label><textarea id="m1_adjustments" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-E">
+  <div class="act-header" style="--act-color:#6C3C8C">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY E</span>
+      <span class="act-title">TEAM TEACHING: RESEARCH REPORTS + PLANNING</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 15 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Each person presents their research from Meeting 0 (2 min each). Together build the final teaching plan for Session 2 (May 27).</p>
+<p class="section-label">Research reports — each person presents their part:</p>
+
+<table class="data-table">
+  <thead><tr><th>Member</th><th>Research finding (2 min each)</th></tr></thead>
+  <tbody>
+    <tr><td>Member 1</td><td><textarea id="m1_research1" rows="2" oninput="save()" placeholder="Key finding from their subtopic…"></textarea></td></tr>
+    <tr><td>Member 2</td><td><textarea id="m1_research2" rows="2" oninput="save()" placeholder="…"></textarea></td></tr>
+    <tr><td>Member 3</td><td><textarea id="m1_research3" rows="2" oninput="save()" placeholder="…"></textarea></td></tr>
+    <tr><td>Member 4</td><td><textarea id="m1_research4" rows="2" oninput="save()" placeholder="…"></textarea></td></tr>
+  </tbody>
+</table>
+<div class="field"><label>Our teaching structure — time blocks and who leads:</label><textarea id="m1_teaching_plan" rows="4" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-F">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY F</span>
+      <span class="act-title">SUMMARY + PUBLIC COMMITMENTS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="info-box"><strong>Public commitment protocol</strong><ul><li>State your commitment specifically (when, where, how often).</li><li>Name your trigger: 'After I _____ I will do my HRV practice.'</li><li>The group witnesses — increases follow-through by 40%.</li></ul></div>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>HRV practice commitment + trigger:</label><textarea id="m1_commit_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>HRV practice commitment + trigger:</label><textarea id="m1_commit_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>HRV practice commitment + trigger:</label><textarea id="m1_commit_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>HRV practice commitment + trigger:</label><textarea id="m1_commit_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+<div class="field-wide"><label>One word to close:</label><input type="text" id="m1_closing" placeholder="" oninput="save()"></div>
+  </div>
+</div>
+  </div>
+</section>
+
+  <!-- MEETING 2 -->
+  
+<section class="meeting-section" id="meeting-m2" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m2</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 2: AFTER TEAM TEACHING</div>
+      <div class="meeting-meta">May 27–31 · 60 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m2_date" placeholder="" oninput="save()"></div> <div class="field"><label>Platform</label><input type="text" id="m2_platform" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m2_facilitator" placeholder="" oninput="save()"></div> <div class="field"><label>Notetaker</label><input type="text" id="m2_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<div class="hrv-section" id="hrv-m2">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m2">
+        <div class="bubble-phase" id="bphase-m2">Ready</div>
+        <div class="bubble-count" id="bcount-m2"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m2">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m2"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m2')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m2')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m2_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m2_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m2_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m2_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-A">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY A</span>
+      <span class="act-title">CHECK-IN + PEER TEACHING DEBRIEF</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Week in brief / how did the teaching go?</label><textarea id="m2_checkin_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Week in brief / how did the teaching go?</label><textarea id="m2_checkin_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Week in brief / how did the teaching go?</label><textarea id="m2_checkin_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Week in brief / how did the teaching go?</label><textarea id="m2_checkin_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+<div class="field"><label>What worked in our teaching · what we'd do differently · what we learned from others:</label><textarea id="m2_teaching_reflect" rows="4" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-B">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY B</span>
+      <span class="act-title">HRV WEEK 2: PRACTICE REFLECTION</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('B')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-B">
+<p><strong>Resonance frequency breathing:</strong> Breathing at ~6 breaths/min (4s in, 6s out) maximises heart rate variability by synchronising respiratory and cardiac rhythms. Regular practice (20 min/day) is associated with reduced anxiety, better stress regulation, and improved autonomic flexibility.</p>
+<p><em>Lehrer, P., & Gevirtz, R. (2014). Heart rate variability biofeedback. Frontiers in Psychology, 5, 756.</em></p></div>
+  <div class="act-body">
+    
+<div class="field"><label>Common themes from Week 2 HRV practice:</label><textarea id="m2_hrv_themes" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-C">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY C</span>
+      <span class="act-title">SOCIAL NORMS + GROUP PROGRESS</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="info-box"><strong>Group progress moment</strong><ul><li>Show of hands: who practiced at least 3 times this week?</li><li>Name the number out loud — it normalises the behaviour.</li><li>What made the difference for those who practiced?</li></ul></div>
+<div class="field"><label>What made the difference this week:</label><textarea id="m2_progress" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Check-in pair update — Pair A & B:</label><textarea id="m2_pairs_update" rows="2" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-D">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY D</span>
+      <span class="act-title">ON-SITE EXPERIMENT: FIRST DESIGN MEETING</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 15 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<p class="inst">Design your on-site experiment for the Reykjavík intensive (June 1–5).</p>
+<div class="field"><label>Our research question:</label><textarea id="m2_research_q" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Condition 1 (e.g. pre-task HRV breathing):</label><textarea id="m2_condition1" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Condition 2 (control):</label><textarea id="m2_condition2" rows="2" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>What to prepare before the on-site intensive:</label><textarea id="m2_prep" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-E">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY E</span>
+      <span class="act-title">COMMITMENTS + CLOSE</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>HRV commitment for next week:</label><input type="text" id="m2_commit_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>HRV commitment for next week:</label><input type="text" id="m2_commit_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>HRV commitment for next week:</label><input type="text" id="m2_commit_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>HRV commitment for next week:</label><input type="text" id="m2_commit_m4" placeholder="" oninput="save()"></div></div>
+
+<div class="field-wide"><label>One word to close:</label><input type="text" id="m2_closing" placeholder="" oninput="save()"></div>
+  </div>
+</div>
+  </div>
+</section>
+
+  <!-- MEETING 3 -->
+  
+<section class="meeting-section" id="meeting-m3" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m3</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 3: POST ON-SITE INTENSIVE</div>
+      <div class="meeting-meta">June 6–10 · 60 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m3_date" placeholder="" oninput="save()"></div> <div class="field"><label>Platform</label><input type="text" id="m3_platform" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m3_facilitator" placeholder="" oninput="save()"></div> <div class="field"><label>Notetaker</label><input type="text" id="m3_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<div class="hrv-section" id="hrv-m3">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m3">
+        <div class="bubble-phase" id="bphase-m3">Ready</div>
+        <div class="bubble-count" id="bcount-m3"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m3">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m3"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m3')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m3')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m3_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m3_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m3_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m3_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-A">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY A</span>
+      <span class="act-title">CHECK-IN: HOW ARE YOU AFTER ON-SITE?</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 8 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Current state + something from the on-site week:</label><textarea id="m3_checkin_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Current state + something from the on-site week:</label><textarea id="m3_checkin_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Current state + something from the on-site week:</label><textarea id="m3_checkin_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Current state + something from the on-site week:</label><textarea id="m3_checkin_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-B">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY B</span>
+      <span class="act-title">HRV PRACTICE RESILIENCE REVIEW</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 15 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('B')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-B">
+<p><strong>Resonance frequency breathing:</strong> Breathing at ~6 breaths/min (4s in, 6s out) maximises heart rate variability by synchronising respiratory and cardiac rhythms. Regular practice (20 min/day) is associated with reduced anxiety, better stress regulation, and improved autonomic flexibility.</p>
+<p><em>Lehrer, P., & Gevirtz, R. (2014). Heart rate variability biofeedback. Frontiers in Psychology, 5, 756.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Resilience round</strong><ul><li>Did practice happen on-site? What got in the way?</li><li>How do you plan to re-enter the practice now that you're back?</li><li>No judgment — re-entry is the skill.</li></ul></div>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>What happened on-site + plan to restart:</label><textarea id="m3_resilience_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>What happened on-site + plan to restart:</label><textarea id="m3_resilience_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>What happened on-site + plan to restart:</label><textarea id="m3_resilience_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>What happened on-site + plan to restart:</label><textarea id="m3_resilience_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-C">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY C</span>
+      <span class="act-title">PEER RECOGNITION & CELEBRATION</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 10 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('C')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-C">
+<p><strong>Vicarious mastery (Bandura, 1997):</strong> Observing someone similar to you succeed increases your own self-efficacy. When peers share specific moments where the practice worked, it raises the group's collective belief that it is achievable — more powerfully than instructor demonstrations.</p>
+<p><em>Bandura, A. (1997). Self-efficacy: The exercise of control. Freeman.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Peer recognition</strong><ul><li>Name something specific you observed in a teammate.</li><li>Avoid generic praise — be concrete: 'I noticed that you…'</li></ul></div>
+<div class="field"><label>What the team did well this month:</label><textarea id="m3_team_strengths" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-D">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY D</span>
+      <span class="act-title">DATA ANALYSIS + CAPSTONE START</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 20 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="field"><label>Key findings from our on-site experiment:</label><textarea id="m3_findings" rows="4" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Questions our data raises:</label><textarea id="m3_questions" rows="2" placeholder="" oninput="save()"></textarea></div>
+<p class="section-label" style="margin-top:16px">Capstone report tasks:</p>
+<table class="data-table">
+  <thead><tr><th>Section</th><th>Who writes</th><th>Draft by</th></tr></thead>
+  <tbody>
+    <tr><td>Introduction</td><td><input type="text" id="cap_intro_who" oninput="save()"></td><td><input type="text" id="cap_intro_date" oninput="save()"></td></tr>
+    <tr><td>Methods</td><td><input type="text" id="cap_meth_who" oninput="save()"></td><td><input type="text" id="cap_meth_date" oninput="save()"></td></tr>
+    <tr><td>Results</td><td><input type="text" id="cap_res_who" oninput="save()"></td><td><input type="text" id="cap_res_date" oninput="save()"></td></tr>
+    <tr><td>Discussion</td><td><input type="text" id="cap_disc_who" oninput="save()"></td><td><input type="text" id="cap_disc_date" oninput="save()"></td></tr>
+    <tr><td>References</td><td><input type="text" id="cap_ref_who" oninput="save()"></td><td><input type="text" id="cap_ref_date" oninput="save()"></td></tr>
+  </tbody>
+</table>
+  </div>
+</div>
+<div class="activity" id="act-E">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY E</span>
+      <span class="act-title">COMMITMENTS + CLOSE</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>HRV + capstone commitment:</label><input type="text" id="m3_commit_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>HRV + capstone commitment:</label><input type="text" id="m3_commit_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>HRV + capstone commitment:</label><input type="text" id="m3_commit_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>HRV + capstone commitment:</label><input type="text" id="m3_commit_m4" placeholder="" oninput="save()"></div></div>
+<div class="field-wide"><label>One word:</label><input type="text" id="m3_closing" placeholder="" oninput="save()"></div>
+  </div>
+</div>
+  </div>
+</section>
+
+  <!-- MEETING 4 -->
+  
+<section class="meeting-section" id="meeting-m4" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m4</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 4: REPORT & PRESENTATION WEEK</div>
+      <div class="meeting-meta">June 10–15 · 60 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m4_date" placeholder="" oninput="save()"></div> <div class="field"><label>Platform</label><input type="text" id="m4_platform" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m4_facilitator" placeholder="" oninput="save()"></div> <div class="field"><label>Notetaker</label><input type="text" id="m4_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<div class="hrv-section" id="hrv-m4">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m4">
+        <div class="bubble-phase" id="bphase-m4">Ready</div>
+        <div class="bubble-count" id="bcount-m4"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m4">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m4"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m4')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m4')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m4_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m4_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m4_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m4_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-A">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY A</span>
+      <span class="act-title">CHECK-IN</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Current state / week in brief:</label><input type="text" id="m4_checkin_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Current state / week in brief:</label><input type="text" id="m4_checkin_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Current state / week in brief:</label><input type="text" id="m4_checkin_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Current state / week in brief:</label><input type="text" id="m4_checkin_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-B">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY B</span>
+      <span class="act-title">HRV PRACTICE: LOOKING BACK + PEER MI ROUND</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 20 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('B')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-B">
+<p><strong>Motivational Interviewing principles:</strong> MI uses open questions, reflective listening, and affirming change talk. When peers (not just instructors) ask "What would make this easier?" the effect on motivation is amplified — people feel heard, not lectured.</p>
+<p><em>Miller, W.R., & Rollnick, S. (2013). Motivational interviewing (3rd ed.). Guilford Press.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Full MI reflection</strong><ul><li>Satisfaction with HRV practice 0–10 (where 0 = not at all, 10 = exactly as planned).</li><li>What has changed since the start of the course?</li><li>What has this group given you that you wouldn't have had alone?</li></ul></div>
+<div class="field"><label>Themes and insights shared:</label><textarea id="m4_hrv_themes" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-C">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY C</span>
+      <span class="act-title">MASTERY STORIES</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 8 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('C')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-C">
+<p><strong>Mastery stories:</strong> Specific, personal accounts of "this worked for me" are more persuasive than statistics. They activate narrative transportation, reduce defensiveness, and make behaviour change feel real and achievable.</p>
+<p><em>Green, M.C., & Brock, T.C. (2000). The role of transportation in the persuasiveness of public narratives. Journal of Personality & Social Psychology, 79(5), 701–721.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Mastery stories</strong><ul><li>Each person: describe one specific moment where the practice felt like it was working.</li><li>Notetaker: note the key phrase from each person's story.</li></ul></div>
+<div class="field"><label>Key phrases from each person's mastery story:</label><textarea id="m4_mastery" rows="3" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-D">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY D</span>
+      <span class="act-title">REPORT PROGRESS + PRESENTATION START</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 20 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="field"><label>Presentation outline — draft structure (15 min slot on June 16):</label><textarea id="m4_presentation" rows="4" placeholder="" oninput="save()"></textarea></div>
+<p class="section-label" style="margin-top:16px">Project tracker — tasks, status & blockers:</p>
+
+<table class="data-table">
+  <thead><tr><th>Task</th><th>Status</th><th>Blocker</th><th>Next step</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><input type="text" id="tr1_task" oninput="save()" placeholder="Task…"></td>
+      <td><select id="tr1_status" onchange="save()"><option>To do</option><option>In progress</option><option>Done</option></select></td>
+      <td><input type="text" id="tr1_blocker" oninput="save()"></td>
+      <td><input type="text" id="tr1_next" oninput="save()"></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="tr2_task" oninput="save()"></td>
+      <td><select id="tr2_status" onchange="save()"><option>To do</option><option>In progress</option><option>Done</option></select></td>
+      <td><input type="text" id="tr2_blocker" oninput="save()"></td>
+      <td><input type="text" id="tr2_next" oninput="save()"></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="tr3_task" oninput="save()"></td>
+      <td><select id="tr3_status" onchange="save()"><option>To do</option><option>In progress</option><option>Done</option></select></td>
+      <td><input type="text" id="tr3_blocker" oninput="save()"></td>
+      <td><input type="text" id="tr3_next" oninput="save()"></td>
+    </tr>
+    <tr>
+      <td><input type="text" id="tr4_task" oninput="save()"></td>
+      <td><select id="tr4_status" onchange="save()"><option>To do</option><option>In progress</option><option>Done</option></select></td>
+      <td><input type="text" id="tr4_blocker" oninput="save()"></td>
+      <td><input type="text" id="tr4_next" oninput="save()"></td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+<div class="activity" id="act-E">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY E</span>
+      <span class="act-title">COMMITMENTS + CLOSE</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 5 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Report task + HRV practice goal before Meeting 5:</label><input type="text" id="m4_commit_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Report task + HRV practice goal before Meeting 5:</label><input type="text" id="m4_commit_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Report task + HRV practice goal before Meeting 5:</label><input type="text" id="m4_commit_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Report task + HRV practice goal before Meeting 5:</label><input type="text" id="m4_commit_m4" placeholder="" oninput="save()"></div></div>
+
+<div class="field-wide"><label>One word:</label><input type="text" id="m4_closing" placeholder="" oninput="save()"></div>
+  </div>
+</div>
+  </div>
+</section>
+
+  <!-- MEETING 5 -->
+  
+<section class="meeting-section" id="meeting-m5" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id">m5</div>
+    <div class="meeting-info">
+      <div class="meeting-title">MEETING 5: FINAL MEETING & CELEBRATION</div>
+      <div class="meeting-meta">June 15–16 · 60 minutes</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    
+<div class="meet-meta-grid">
+  <div class="field"><label>Date</label><input type="text" id="m5_date" placeholder="" oninput="save()"></div> <div class="field"><label>Platform</label><input type="text" id="m5_platform" placeholder="" oninput="save()"></div>
+  <div class="field"><label>Facilitator</label><input type="text" id="m5_facilitator" placeholder="" oninput="save()"></div> <div class="field"><label>Notetaker</label><input type="text" id="m5_notetaker" placeholder="" oninput="save()"></div>
+</div>
+<p class="inst">We close this course the same way we practised it — together, breathing. Notice how this feels compared to the very first time in Meeting 0.</p>
+<div class="hrv-section" id="hrv-m5">
+  <div class="hrv-header">
+    <span class="hrv-icon">♥</span>
+    <span class="hrv-title">HRV BREATHING CHECK-IN · 5 MINUTES · 4 IN / 6 OUT</span>
+  </div>
+  <div class="hrv-body">
+    <div class="bubble-wrap">
+      <div class="bubble-outer"></div>
+      <div class="bubble" id="bubble-m5">
+        <div class="bubble-phase" id="bphase-m5">Ready</div>
+        <div class="bubble-count" id="bcount-m5"></div>
+      </div>
+    </div>
+    <div class="hrv-controls">
+      <div class="hrv-timer" id="btimer-m5">5:00</div>
+      <div class="hrv-progress-wrap"><div class="hrv-progress" id="bprog-m5"></div></div>
+      <div class="hrv-btn-row">
+        <button class="btn-start" onclick="startHRV('m5')">Start</button>
+        <button class="btn-reset" onclick="resetHRV('m5')">Reset</button>
+      </div>
+      <p class="hrv-hint">Breathe in as the circle expands · breathe out as it contracts · no talking</p>
+    </div>
+  </div>
+  <div class="hrv-reflection">
+    <p class="section-label">Brief reflection — each person one sentence:</p>
+    <div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m5_m1" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m5_m2" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m5_m3" placeholder="" oninput="save()"></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My body / mind feels…</label><input type="text" id="hrv_reflect_m5_m4" placeholder="" oninput="save()"></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-A">
+  <div class="act-header" style="--act-color:#006D77">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY A</span>
+      <span class="act-title">FINAL PRESENTATION RUN-THROUGH</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 20 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="field"><label>What to tighten in our presentation:</label><textarea id="m5_tighten" rows="3" placeholder="" oninput="save()"></textarea></div>
+<div class="field"><label>Who opens / leads each section / closes:</label><textarea id="m5_roles" rows="2" placeholder="" oninput="save()"></textarea></div>
+  </div>
+</div>
+<div class="activity" id="act-B">
+  <div class="act-header" style="--act-color:#06A078">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY B</span>
+      <span class="act-title">PEER APPRECIATION ROUND</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 15 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('B')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-B">
+<p><strong>Vicarious mastery (Bandura, 1997):</strong> Observing someone similar to you succeed increases your own self-efficacy. When peers share specific moments where the practice worked, it raises the group's collective belief that it is achievable — more powerfully than instructor demonstrations.</p>
+<p><em>Bandura, A. (1997). Self-efficacy: The exercise of control. Freeman.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Appreciation round</strong><ul><li>Each person: name something specific and concrete you observed in each teammate.</li><li>'I noticed that you…' not 'You are great at…'</li><li>Allow silence after each appreciation — let it land.</li></ul></div>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>Appreciation for this person:</label><textarea id="m5_appreciation_m1" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>Appreciation for this person:</label><textarea id="m5_appreciation_m2" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>Appreciation for this person:</label><textarea id="m5_appreciation_m3" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>Appreciation for this person:</label><textarea id="m5_appreciation_m4" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-C">
+  <div class="act-header" style="--act-color:#1D3557">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY C</span>
+      <span class="act-title">HRV SUSTAINABILITY PLANNING</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 12 min</span>
+      <button class="ev-btn" onclick="toggleEvidence('C')" title="Evidence & background">📚 Evidence</button>
+    </div>
+  </div>
+  <div class="evidence-panel" id="ev-C">
+<p><strong>Co-regulation:</strong> Breathing in synchrony with others activates shared physiological rhythms that build social cohesion and reduce interpersonal stress (Feldman Barrett, 2017). Beginning every meeting this way creates a consistent, calming ritual that signals safety.</p>
+<p><em>Feldman Barrett, L. (2017). How emotions are made. Houghton Mifflin Harcourt.</em></p></div>
+  <div class="act-body">
+    
+<div class="info-box"><strong>Post-course commitment contract</strong><ul><li>Specific days and times for HRV practice.</li><li>Your 'if this happens I will still practice' plan.</li><li>Who will you tell about this commitment?</li></ul></div>
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>My HRV sustainability plan after the course:</label><textarea id="m5_sustain_m1" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>My HRV sustainability plan after the course:</label><textarea id="m5_sustain_m2" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>My HRV sustainability plan after the course:</label><textarea id="m5_sustain_m3" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>My HRV sustainability plan after the course:</label><textarea id="m5_sustain_m4" rows="3" placeholder="" oninput="save()"></textarea></div></div>
+
+  </div>
+</div>
+<div class="activity" id="act-D">
+  <div class="act-header" style="--act-color:#E76F51">
+    <div class="act-label">
+      <span class="act-num">ACTIVITY D</span>
+      <span class="act-title">CLOSING CEREMONY</span>
+    </div>
+    <div class="act-meta">
+      <span class="act-dur">⏱ 8 min</span>
+      
+    </div>
+  </div>
+  
+  <div class="act-body">
+    
+<div class="member-block"><span class="member-tag">Member 1</span><div class="field"><label>One word for the experience + one thing you're taking with you:</label><textarea id="m5_closing_m1" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 2</span><div class="field"><label>One word for the experience + one thing you're taking with you:</label><textarea id="m5_closing_m2" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 3</span><div class="field"><label>One word for the experience + one thing you're taking with you:</label><textarea id="m5_closing_m3" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+<div class="member-block"><span class="member-tag">Member 4</span><div class="field"><label>One word for the experience + one thing you're taking with you:</label><textarea id="m5_closing_m4" rows="2" placeholder="" oninput="save()"></textarea></div></div>
+
+<div class="done-box">🎉 You completed the course. This workbook is part of your submission — save it and export to PDF.</div>
+  </div>
+</div>
+  </div>
+</section>
+
+  <!-- APPENDIX B -->
+  
+<section class="meeting-section" id="meeting-appendix-b" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id" style="font-size:1.1rem">APP B</div>
+    <div class="meeting-info">
+      <div class="meeting-title">CHECK-IN PAIRS LOG</div>
+      <div class="meeting-meta">Between-meeting check-ins · one message, one reply</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+    <p class="inst">Pairs check in BETWEEN team meetings. This log is for the team meeting debrief — note themes and outcomes, not private conversations.</p>
+    
+<div class="appendix-week">
+  <div class="week-label">Week 1</div>
+  <div class="field"><label>Pair A — what came up / themes:</label><textarea id="app_pairA_w1" rows="2" placeholder="" oninput="save()"></textarea></div>
+  <div class="field"><label>Pair B — what came up / themes:</label><textarea id="app_pairB_w1" rows="2" placeholder="" oninput="save()"></textarea></div>
+</div>
+<div class="appendix-week">
+  <div class="week-label">Week 2</div>
+  <div class="field"><label>Pair A — what came up / themes:</label><textarea id="app_pairA_w2" rows="2" placeholder="" oninput="save()"></textarea></div>
+  <div class="field"><label>Pair B — what came up / themes:</label><textarea id="app_pairB_w2" rows="2" placeholder="" oninput="save()"></textarea></div>
+</div>
+<div class="appendix-week">
+  <div class="week-label">Week 3</div>
+  <div class="field"><label>Pair A — what came up / themes:</label><textarea id="app_pairA_w3" rows="2" placeholder="" oninput="save()"></textarea></div>
+  <div class="field"><label>Pair B — what came up / themes:</label><textarea id="app_pairB_w3" rows="2" placeholder="" oninput="save()"></textarea></div>
+</div>
+<div class="appendix-week">
+  <div class="week-label">Week 4</div>
+  <div class="field"><label>Pair A — what came up / themes:</label><textarea id="app_pairA_w4" rows="2" placeholder="" oninput="save()"></textarea></div>
+  <div class="field"><label>Pair B — what came up / themes:</label><textarea id="app_pairB_w4" rows="2" placeholder="" oninput="save()"></textarea></div>
+</div>
+<div class="appendix-week">
+  <div class="week-label">Week 5</div>
+  <div class="field"><label>Pair A — what came up / themes:</label><textarea id="app_pairA_w5" rows="2" placeholder="" oninput="save()"></textarea></div>
+  <div class="field"><label>Pair B — what came up / themes:</label><textarea id="app_pairB_w5" rows="2" placeholder="" oninput="save()"></textarea></div>
+</div>
+  </div>
+</section>
+
+  <!-- APPENDIX C -->
+  
+<section class="meeting-section" id="meeting-appendix-c" style="display:none">
+  <div class="meeting-banner">
+    <div class="meeting-id" style="font-size:1.1rem">APP C</div>
+    <div class="meeting-info">
+      <div class="meeting-title">EVIDENCE BASE</div>
+      <div class="meeting-meta">Psychological frameworks underpinning this workbook</div>
+    </div>
+  </div>
+  <div class="meeting-body">
+
+    <div class="evidence-full">
+      <h3>HRV Biofeedback</h3>
+      <p>Breathing at resonance frequency (~6 breaths/min) maximises heart rate variability. Regular practice (≥20 min/day) reduces anxiety, improves stress regulation, and increases autonomic flexibility.</p>
+      <p class="ref">Lehrer, P., & Gevirtz, R. (2014). Heart rate variability biofeedback: How and why does it work? <em>Frontiers in Psychology</em>, 5, 756.</p>
+      <p class="ref">Lehrer, P., et al. (2020). Heart rate variability biofeedback improves emotional and physical health. <em>Applied Psychophysiology and Biofeedback</em>, 45, 109–129.</p>
+    </div>
+
+    <div class="evidence-full">
+      <h3>Motivational Interviewing (MI)</h3>
+      <p>Open-ended questions, reflective listening, and affirming change talk — when applied by peers (not just clinicians) — significantly increase intrinsic motivation and behaviour change.</p>
+      <p class="ref">Miller, W.R., & Rollnick, S. (2013). <em>Motivational interviewing: Helping people change</em> (3rd ed.). Guilford Press.</p>
+    </div>
+
+    <div class="evidence-full">
+      <h3>Vicarious Mastery (Bandura)</h3>
+      <p>Observing a similar person succeed raises your own self-efficacy more than instruction alone. Peer sharing of specific mastery moments is more persuasive than statistics.</p>
+      <p class="ref">Bandura, A. (1997). <em>Self-efficacy: The exercise of control</em>. Freeman.</p>
+    </div>
+
+    <div class="evidence-full">
+      <h3>Social Accountability & Check-in Partners</h3>
+      <p>Named partners who ask "Did you practice?" activate social accountability. Brief, regular check-ins are more effective than periodic reviews or group accountability.</p>
+      <p class="ref">Prestwich, A., et al. (2012). Randomized controlled trial of collaborative implementation intentions. <em>Health Psychology</em>, 31(1), 67–75.</p>
+    </div>
+
+    <div class="evidence-full">
+      <h3>Co-Regulation & Shared Breathing</h3>
+      <p>Breathing in synchrony activates shared physiological rhythms that reduce interpersonal stress and build social cohesion — the neuroscience of why the opening ritual matters.</p>
+      <p class="ref">Feldman Barrett, L. (2017). <em>How emotions are made</em>. Houghton Mifflin Harcourt.</p>
+    </div>
+
+    <div class="evidence-full">
+      <h3>Public Commitment & Follow-Through</h3>
+      <p>Stating a specific commitment out loud in front of peers increases follow-through significantly compared to private intention. Specificity (when, where, how) is key.</p>
+      <p class="ref">Gollwitzer, P.M. (1999). Implementation intentions. <em>American Psychologist</em>, 54(7), 493–503.</p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── Navigation ──────────────────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.meeting-section, #cover').forEach(s => s.style.display = 'none');
+  const el = document.getElementById(id === 'cover' ? 'cover' : 'meeting-' + id);
+  if (el) el.style.display = 'block';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.target === id));
+}
+
+// ── Evidence toggles ─────────────────────────────────────────────────────────
+function toggleEvidence(id) {
+  const panel = document.getElementById('ev-' + id);
+  if (panel) panel.classList.toggle('open');
+}
+
+// ── localStorage save/load ───────────────────────────────────────────────────
+function getKey() {
+  return 'twb_' + (document.getElementById('team-name').value || 'default');
+}
+
+let saveTimer;
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(_doSave, 800);
+}
+
+function _doSave() {
+  const data = {};
+  document.querySelectorAll('input[id], textarea[id], select[id]').forEach(el => {
+    if (el.id) data[el.id] = el.value;
+  });
+  localStorage.setItem('twb_data', JSON.stringify(data));
+  const ind = document.getElementById('save-indicator');
+  if (ind) { ind.textContent = '✓ Saved'; setTimeout(() => ind.textContent = '', 2000); }
+}
+
+function loadData() {
+  const raw = localStorage.getItem('twb_data');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+  } catch(e) {}
+}
+
+function clearData() {
+  if (!confirm('Clear ALL saved data for this workbook? This cannot be undone.')) return;
+  localStorage.removeItem('twb_data');
+  document.querySelectorAll('input[id], textarea[id], select[id]').forEach(el => { if (el.type !== 'button') el.value = ''; });
+}
+
+// ── HRV Breathing ────────────────────────────────────────────────────────────
+const hState = {};
+
+function startHRV(mid) {
+  if (hState[mid]?.running) { pauseHRV(mid); return; }
+  const s = hState[mid] = hState[mid] || {};
+  s.running = true; s.elapsed = s.elapsed || 0; s.total = 300;
+  const btn = document.querySelector(`#hrv-${mid} .btn-start`);
+  btn.textContent = 'Pause';
+  s.interval = setInterval(() => {
+    s.elapsed++;
+    const left = s.total - s.elapsed;
+    document.getElementById('btimer-' + mid).textContent = fmtTime(Math.max(0, left));
+    document.getElementById('bprog-' + mid).style.width = (s.elapsed / s.total * 100) + '%';
+    if (s.elapsed >= s.total) { endHRV(mid); }
+  }, 1000);
+  bubble_inhale(mid);
+}
+
+function pauseHRV(mid) {
+  const s = hState[mid];
+  if (!s) return;
+  s.running = false;
+  clearInterval(s.interval); clearTimeout(s.phaseTimeout);
+  const btn = document.querySelector(`#hrv-${mid} .btn-start`);
+  btn.textContent = 'Resume';
+  const b = document.getElementById('bubble-' + mid);
+  b.className = 'bubble';
+  document.getElementById('bphase-' + mid).textContent = 'Paused';
+  document.getElementById('bcount-' + mid).textContent = '';
+}
+
+function resetHRV(mid) {
+  const s = hState[mid];
+  if (s) { clearInterval(s.interval); clearTimeout(s.phaseTimeout); }
+  hState[mid] = {};
+  document.getElementById('btimer-' + mid).textContent = '5:00';
+  document.getElementById('bprog-' + mid).style.width = '0%';
+  document.getElementById('bphase-' + mid).textContent = 'Ready';
+  document.getElementById('bcount-' + mid).textContent = '';
+  document.getElementById('bubble-' + mid).className = 'bubble';
+  const btn = document.querySelector(`#hrv-${mid} .btn-start`);
+  btn.textContent = 'Start';
+}
+
+function endHRV(mid) {
+  const s = hState[mid];
+  clearInterval(s.interval); clearTimeout(s.phaseTimeout);
+  s.running = false;
+  document.getElementById('bphase-' + mid).textContent = 'Done';
+  document.getElementById('bcount-' + mid).textContent = '✓';
+  document.getElementById('bubble-' + mid).className = 'bubble';
+  document.querySelector(`#hrv-${mid} .btn-start`).textContent = 'Start';
+}
+
+function bubble_inhale(mid) {
+  const s = hState[mid];
+  if (!s || !s.running) return;
+  const b = document.getElementById('bubble-' + mid);
+  b.style.setProperty('--in-dur', '4s');
+  b.className = 'bubble inhaling';
+  document.getElementById('bphase-' + mid).textContent = 'Breathe in';
+  let count = 4;
+  document.getElementById('bcount-' + mid).textContent = count;
+  const tick = setInterval(() => {
+    count--;
+    if (count > 0) document.getElementById('bcount-' + mid).textContent = count;
+    else { clearInterval(tick); }
+  }, 1000);
+  s.phaseTimeout = setTimeout(() => bubble_exhale(mid), 4000);
+}
+
+function bubble_exhale(mid) {
+  const s = hState[mid];
+  if (!s || !s.running) return;
+  const b = document.getElementById('bubble-' + mid);
+  b.style.setProperty('--out-dur', '6s');
+  b.className = 'bubble exhaling';
+  document.getElementById('bphase-' + mid).textContent = 'Breathe out';
+  let count = 6;
+  document.getElementById('bcount-' + mid).textContent = count;
+  const tick = setInterval(() => {
+    count--;
+    if (count > 0) document.getElementById('bcount-' + mid).textContent = count;
+    else { clearInterval(tick); }
+  }, 1000);
+  s.phaseTimeout = setTimeout(() => bubble_inhale(mid), 6000);
+}
+
+function fmtTime(s) {
+  const m = Math.floor(s / 60); const ss = s % 60;
+  return m + ':' + String(ss).padStart(2, '0');
+}
+
+// ── Export PDF ────────────────────────────────────────────────────────────────
+function exportPDF() {
+  document.querySelectorAll('.meeting-section').forEach(s => s.style.display = 'block');
+  document.getElementById('cover').style.display = 'block';
+  window.print();
+  // After print dialog, restore to current section
+  setTimeout(() => {
+    const active = document.querySelector('.nav-btn.active');
+    if (active) showSection(active.dataset.target);
+  }, 1000);
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  showSection('cover');
+  document.getElementById('team-name').addEventListener('input', save);
+});
+</script>
+</body>
+</html>
