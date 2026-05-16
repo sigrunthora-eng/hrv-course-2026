@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techniques — HRV Biofeedback Course 2026</title>
+<style>
+:root {
+  --bg: #0b1829;
+  --surface: #132338;
+  --surface2: #1a2f4a;
+  --border: #1e3555;
+  --text: #ddeaf7;
+  --muted: #6a94b8;
+  --accent: #38b2ac;
+  --accent2: #63d0ff;
+  --teal-light: #81e6d9;
+  --coral: #e76f51;
+  --green: #06a078;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; }
+
+/* NAV */
+nav {
+  background: #0a1624;
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  display: flex; align-items: center; gap: 0;
+  position: sticky; top: 0; z-index: 100;
+  height: 52px;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  margin-right: 28px; text-decoration: none;
+}
+.nav-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: linear-gradient(135deg,#1a6fa3,#38b2ac);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.nav-brand-text { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+.nav-links { display: flex; gap: 2px; align-items: center; }
+.nav-link {
+  padding: 6px 12px; border-radius: 7px;
+  text-decoration: none; color: var(--muted); font-size: 0.8rem;
+  display: flex; align-items: center; gap: 5px;
+  transition: all 0.15s;
+}
+.nav-link:hover { background: var(--surface); color: var(--text); }
+.nav-link.active { background: var(--surface2); color: var(--accent); font-weight: 600; }
+
+/* BACK BUTTON */
+.back-bar { padding: 8px 28px 0; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .78rem; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; transition: all .15s;
+  background: transparent;
+}
+.back-btn:hover { color: var(--text); border-color: var(--accent); background: var(--surface); }
+
+/* PAGE WRAPPER */
+.page { max-width: 940px; margin: 0 auto; padding: 36px 24px 60px; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(140deg,#0f2540 0%,#0e2d3a 100%);
+  padding: 52px 24px 44px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; width:500px; height:500px;
+  background: radial-gradient(circle,rgba(56,178,172,.07) 0%,transparent 70%);
+  top:-150px; left:50%; transform:translateX(-50%); pointer-events:none;
+}
+.badge {
+  display:inline-block; background:rgba(56,178,172,.12);
+  border:1px solid rgba(56,178,172,.25); border-radius:20px;
+  padding:4px 14px; font-size:.72rem; color:var(--teal-light);
+  letter-spacing:.08em; text-transform:uppercase; margin-bottom:16px;
+}
+.hero h1 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight:700; line-height:1.15; margin-bottom:8px; }
+.hero h1 span { color: var(--accent); }
+.hero p { font-size:.95rem; color:var(--muted); max-width:520px; margin:0 auto; }
+
+/* CARDS */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-top:28px; }
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:20px; text-decoration:none; color:inherit;
+  transition:all .15s; display:block;
+}
+.card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.3); }
+.card-icon { font-size:1.6rem; margin-bottom:10px; }
+.card-title { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:4px; }
+.card-desc { font-size:.8rem; color:var(--muted); line-height:1.5; }
+
+/* SECTION */
+.section { margin-top:40px; }
+.section-title { font-size:1.1rem; font-weight:700; color:var(--accent); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+
+/* TABLE */
+.styled-table { width:100%; border-collapse:collapse; font-size:.84rem; }
+.styled-table th { background:#004B55; color:#fff; padding:10px 14px; text-align:left; font-size:.75rem; letter-spacing:.04em; }
+.styled-table td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--muted); }
+.styled-table td:first-child { color:var(--text); font-weight:600; }
+.styled-table tr:nth-child(even) td { background:rgba(56,178,172,.04); }
+
+/* TEAM CARD */
+.team-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:20px; }
+.team-header { background:var(--surface2); padding:14px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--border); }
+.team-num { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#006D77,#38b2ac); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; color:#fff; flex-shrink:0; }
+.team-topic { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:2px; }
+.team-ref { font-size:.76rem; color:var(--muted); font-style:italic; }
+.team-body { padding:12px 20px 16px; }
+.member-list { display:flex; flex-wrap:wrap; gap:8px; }
+.member-name { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:5px 14px; font-size:.83rem; color:var(--text); }
+
+/* FIELD */
+.f { display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
+.f label { font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+.f input, .f textarea, .f select {
+  background:var(--surface2); border:1px solid var(--border); color:var(--text);
+  border-radius:8px; padding:9px 12px; font-size:.88rem; font-family:inherit;
+  resize:vertical; outline:none; transition:border-color .15s; width:100%;
+}
+.f input:focus, .f textarea:focus, .f select:focus { border-color:var(--accent); background:rgba(56,178,172,.05); }
+
+/* SAVE BAR */
+.save-bar {
+  position:fixed; bottom:20px; right:20px;
+  display:flex; gap:8px; z-index:50;
+}
+.btn-save-float {
+  padding:10px 20px; border-radius:10px; border:none; cursor:pointer;
+  font-size:.82rem; font-weight:600;
+  background:linear-gradient(135deg,#1a6fa3,#38b2ac); color:#fff;
+  box-shadow:0 4px 16px rgba(0,0,0,.4); transition:all .15s;
+}
+.btn-save-float:hover { opacity:.9; transform:translateY(-1px); }
+.save-toast { padding:10px 16px; border-radius:10px; background:var(--surface); border:1px solid var(--accent); color:var(--accent); font-size:.8rem; font-weight:600; box-shadow:0 4px 16px rgba(0,0,0,.4); display:none; align-items:center; }
+.save-toast.show { display:flex; }
+
+/* PRINT */
+@media print {
+  nav, .save-bar { display:none !important; }
+  body { background:#fff; color:#111; }
+  .hero { background:#006D77 !important; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .hero h1, .hero p, .badge { color:#fff !important; }
+  .card, .team-card, .section { background:#fff !important; border:1px solid #ddd !important; }
+  .f input, .f textarea { border:none !important; border-bottom:1px solid #bbb !important; background:transparent !important; color:#111 !important; }
+}
+
+.ex-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 16px; overflow: hidden;
+}
+.ex-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px 14px; border-bottom: 1px solid var(--border);
+}
+.ex-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.ex-title { font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.ex-where { font-size: .72rem; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.ex-body { padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 12px; }
+.ex-block-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
+.ex-block-text { font-size: .86rem; color: var(--text); opacity: .9; line-height: 1.7; }
+.ex-evidence { font-size: .75rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-icon">♥</div>
+    <span class="nav-brand-text">HRV Biofeedback Course</span>
+  </a>
+  <div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a>
+<a href="curriculum.html" class="nav-link">🎓 Curriculum</a>
+<a href="exercises.html" class="nav-link active">🧬 Techniques</a>
+<a href="teams.html" class="nav-link">👥 Teams</a>
+<a href="individual.html" class="nav-link">📓 My Workbook</a>
+<a href="team-workbook.html" class="nav-link">📋 Team Workbook</a>
+<a href="readings.html" class="nav-link">📚 Readings</a>
+</div>
+</nav>
+<div class="back-bar"><a class="back-btn" href="index.html" onclick="if(document.referrer&&document.referrer.includes(location.hostname)){event.preventDefault();history.back()}">← Back</a></div>
+
+<div class="hero" style="padding:40px 24px 32px">
+  <div class="badge">Evidence-Based Techniques</div>
+  <h1>Science &amp; <span>Practice</span></h1>
+  <p>Background, rationale, and evidence for every exercise in the course workbooks</p>
+</div>
+<div class="page">
+
+  <div class="section">
+    <div class="section-title">Physiological Regulation</div>
+
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">🫁</div>
+    <div>
+      <div class="ex-title">HRV Resonance Breathing</div>
+      <div class="ex-where">Both workbooks · every meeting and practice session</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Slow-paced breathing at approximately 6 breaths per minute — 4 seconds in, 6 seconds out. This rate sits at or near each person's individual resonance frequency (~0.1 Hz), the point at which the breathing rhythm synchronises with the heart's natural rhythms to produce maximum swings in heart rate variability.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Breathing at resonance frequency produces a large-amplitude oscillation in heart rate driven by the baroreflex — the body's blood-pressure stabilisation loop. Regular practice strengthens vagal tone, improves baroreflex sensitivity, and down-regulates the sympathetic stress response. Effects accumulate over weeks and extend beyond practice sessions into resting physiology.</div>
+    </div>
+    <div class="ex-evidence">📄 Lehrer &amp; Gevirtz (2014) · Frontiers in Psychology</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">📱</div>
+    <div>
+      <div class="ex-title">HRV Biofeedback with FlowMD</div>
+      <div class="ex-where">Individual workbook · weekly practice sessions</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Real-time measurement of heart rate variability using a fingertip or chest sensor, displayed graphically so you can see your HRV waveform as you breathe. The app provides a breathing pacer and records RMSSD and LF/HF ratio each session.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Biofeedback works by closing the loop between internal physiology and conscious awareness. Seeing your HRV respond to your breath in real time accelerates learning of resonance breathing and deepens interoceptive awareness. The data log also lets you track changes across the course.</div>
+    </div>
+    <div class="ex-evidence">📄 Lehrer et al. (2020) · Applied Psychophysiology and Biofeedback</div>
+  </div>
+</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Motivation &amp; Values</div>
+
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">💡</div>
+    <div>
+      <div class="ex-title">Finding My Why</div>
+      <div class="ex-where">Individual workbook · Pre-session exercise 1</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">A short reflective writing exercise asking you to articulate why physiological self-regulation matters to you personally — what would change in your daily life if you got better at it, and what your core reason for doing this practice is.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Intrinsic motivation — doing something because it aligns with your own values rather than external pressure — is the strongest predictor of sustained behaviour change (Self-Determination Theory, Deci &amp; Ryan). Writing your 'why' in concrete terms activates personal relevance and makes it easier to return to practice on difficult days.</div>
+    </div>
+    <div class="ex-evidence">📄 Deci &amp; Ryan (2000) · Psychological Inquiry</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">📊</div>
+    <div>
+      <div class="ex-title">Importance &amp; Confidence Scales</div>
+      <div class="ex-where">Individual workbook · Pre-session exercise 2</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Two 0–10 rating scales: how important is this practice to you, and how confident are you that you can do it? After rating, you write briefly why your score is not lower — a Motivational Interviewing technique.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">The 'why not lower?' prompt elicits your own arguments for change rather than receiving persuasion from outside. Research on Motivational Interviewing shows this self-generated reasoning is far more durable than external motivation. Separating importance from confidence also helps identify whether the barrier is values (low importance) or self-efficacy (low confidence).</div>
+    </div>
+    <div class="ex-evidence">📄 Miller &amp; Rollnick (2013) · Motivational Interviewing, 3rd ed.</div>
+  </div>
+</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Behaviour Change Planning</div>
+
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">📅</div>
+    <div>
+      <div class="ex-title">Implementation Intentions</div>
+      <div class="ex-where">Individual workbook · Pre-session exercise 3</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Specifying exactly <em>when</em>, <em>where</em>, and <em>how</em> you will do your HRV practice — including anchoring it to an existing daily habit (habit stacking). Written as a concrete personal commitment: 'I will do my practice at [time], in [place], using [method], right after [anchor habit].'</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Implementation intentions work by pre-deciding the response to a situational cue, bypassing the need for in-the-moment motivation. Meta-analyses show they roughly double or triple follow-through rates compared to goal-setting alone. Anchoring to an existing habit (habit stacking) uses established neural pathways to trigger the new behaviour automatically.</div>
+    </div>
+    <div class="ex-evidence">📄 Gollwitzer (1999) · American Psychologist · Lally &amp; Gardner (2013) · British Journal of General Practice</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">🔄</div>
+    <div>
+      <div class="ex-title">If-Then Barrier Planning</div>
+      <div class="ex-where">Individual workbook · Pre-session exercise 4</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Anticipating likely obstacles and writing out specific if-then responses in advance: <em>'If I feel too tired to practice, then I will…'</em> You identify your most predicted barrier and your planned response for each.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Barriers to practice are predictable, yet we often face them unprepared. Pre-planned coping responses (a form of Mental Contrasting with Implementation Intentions, MCII) reduce the cognitive load of decision-making in difficult moments. Having a written response to 'I skipped a day' removes the shame spiral and replaces it with a concrete re-entry plan.</div>
+    </div>
+    <div class="ex-evidence">📄 Oettingen &amp; Gollwitzer (2010) · Perspectives on Psychological Science</div>
+  </div>
+</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Team Practice</div>
+
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">🤝</div>
+    <div>
+      <div class="ex-title">Check-in Round</div>
+      <div class="ex-where">Team workbook · opening of every team meeting</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">A brief structured round at the start of each meeting where each team member shares something personal — typically one word or one sentence about how they are arriving. No cross-talk, no advice. Everyone speaks; everyone is heard.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Psychological safety — the belief that it is safe to take interpersonal risks — is the single strongest predictor of effective team performance (Edmondson, 1999; Google Project Aristotle, 2016). Check-in rounds signal that the whole person is welcome, not just the professional role. Research shows brief rituals of this kind shift teams toward more open communication and creative problem-solving within a few weeks.</div>
+    </div>
+    <div class="ex-evidence">📄 Edmondson (1999) · Administrative Science Quarterly</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">📋</div>
+    <div>
+      <div class="ex-title">Team Charter</div>
+      <div class="ex-where">Team workbook · Meeting 0</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">A shared agreement made at the team's first meeting covering: team roles (lead, notetaker), communication norms, meeting schedule, and how the team will handle disagreements or missed commitments.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Teams that establish explicit norms early outperform those that let norms emerge implicitly — especially on complex, interdisciplinary tasks. A charter shifts implicit assumptions into explicit agreements, reducing friction later. In interdisciplinary teams, making role expectations concrete is particularly important because different disciplines carry different default assumptions about collaboration.</div>
+    </div>
+    <div class="ex-evidence">📄 Hackman (2002) · Leading Teams · Oxford University Press</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">🎓</div>
+    <div>
+      <div class="ex-title">Collaborative Teaching Preparation</div>
+      <div class="ex-where">Team workbook · Meeting 0 → Meeting 1 → Session 2</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Each team is assigned a teaching topic, divides it into subtopics (one per member), researches individually, reports back to the team, then co-designs a 2-hour interactive session for the full cohort using tools like Mentimeter.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Teaching others is one of the highest-leverage learning strategies known (the 'protégé effect'). Dividing research across team members creates genuine interdependence — each person holds unique knowledge the team needs. The active, participatory format for Session 2 reinforces cohort-level learning beyond passive lecture.</div>
+    </div>
+    <div class="ex-evidence">📄 Nestojko et al. (2014) · Memory &amp; Cognition</div>
+  </div>
+</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">On-site Intensive Exercises</div>
+
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">💙</div>
+    <div>
+      <div class="ex-title">Compassion-Based Practice</div>
+      <div class="ex-where">On-site intensive · Session 3 (June 1–5)</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">Structured exercises drawing on self-compassion and compassion-focused approaches — recognising difficulty without self-judgment, cultivating a sense of common humanity (others experience this too), and directing kind attention toward oneself and others.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Compassion practices have been shown to reduce self-criticism, cortisol reactivity, and inflammatory markers, and to increase positive affect and vagal tone — making them a natural complement to HRV biofeedback. The combination of physiological regulation (resonance breathing) with compassion practice targets both the autonomic and evaluative dimensions of the stress response.</div>
+    </div>
+    <div class="ex-evidence">📄 Neff &amp; Germer (2013) · Mindfulness · Gilbert (2014) · British Journal of Clinical Psychology</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">⚡</div>
+    <div>
+      <div class="ex-title">Cognitive Challenge Task &amp; Recovery</div>
+      <div class="ex-where">On-site intensive · Team experiment (June 1–5)</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">A standardised cognitive stressor (e.g., mental arithmetic, Stroop task, or time-pressured problem-solving) used to induce a measurable physiological stress response, followed by a structured recovery phase. Teams compare HRV biofeedback alone versus HRV biofeedback combined with an additional component (e.g., compassion practice).</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Stress reactivity and recovery speed are both meaningfully modulated by HRV biofeedback training. Placing the stressor within a within-subject experimental design — where each participant serves as their own control — lets teams directly observe individual differences in stress profiles and the effect of different recovery strategies on HRV metrics.</div>
+    </div>
+    <div class="ex-evidence">📄 Lehrer et al. (2020) · Applied Psychophysiology and Biofeedback</div>
+  </div>
+</div>
+<div class="ex-card">
+  <div class="ex-header">
+    <div class="ex-icon">📓</div>
+    <div>
+      <div class="ex-title">Weekly Practice Log &amp; Reflection</div>
+      <div class="ex-where">Individual workbook · 5 weeks</div>
+    </div>
+  </div>
+  <div class="ex-body">
+    <div class="ex-block">
+      <div class="ex-block-label">What it is</div>
+      <div class="ex-block-text">A structured daily log recording session type (baseline, resonance breathing, stress response, or combined), duration, RMSSD, and LF/HF ratio — plus a brief weekly reflection on what you noticed, what was challenging, and what shifted.</div>
+    </div>
+    <div class="ex-block">
+      <div class="ex-block-label">Why we use it</div>
+      <div class="ex-block-text">Self-monitoring is consistently among the most effective behaviour-change techniques across domains. Logging HRV metrics weekly creates accountability, reveals patterns, and converts subjective experience into observable data. The reflection prompts build interoceptive awareness and metacognitive insight — two capacities that improve with explicit practice.</div>
+    </div>
+    <div class="ex-evidence">📄 Michie et al. (2013) · Annals of Behavioral Medicine</div>
+  </div>
+</div>
+  </div>
+
+</div>
+
+</body>
+</html>
