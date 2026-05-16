@@ -50,6 +50,17 @@ nav {
 .nav-link:hover { background: var(--surface); color: var(--text); }
 .nav-link.active { background: var(--surface2); color: var(--accent); font-weight: 600; }
 
+/* BACK BUTTON */
+.back-bar { padding: 8px 28px 0; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .78rem; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; transition: all .15s;
+  background: transparent;
+}
+.back-btn:hover { color: var(--text); border-color: var(--accent); background: var(--surface); }
+
 /* PAGE WRAPPER */
 .page { max-width: 940px; margin: 0 auto; padding: 36px 24px 60px; }
 
@@ -105,7 +116,9 @@ nav {
 .team-num { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#006D77,#38b2ac); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1rem; color:#fff; flex-shrink:0; }
 .team-topic { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:2px; }
 .team-ref { font-size:.76rem; color:var(--muted); font-style:italic; }
-.team-body { padding:0 20px 16px; }
+.team-body { padding:12px 20px 16px; }
+.member-list { display:flex; flex-wrap:wrap; gap:8px; }
+.member-name { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:5px 14px; font-size:.83rem; color:var(--text); }
 
 /* FIELD */
 .f { display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
@@ -151,12 +164,15 @@ nav {
     <span class="nav-brand-text">HRV Biofeedback Course</span>
   </a>
   <div class="nav-links"><a href="index.html" class="nav-link">🏠 Home</a>
+<a href="curriculum.html" class="nav-link">🎓 Curriculum</a>
+<a href="exercises.html" class="nav-link">🧬 Techniques</a>
 <a href="teams.html" class="nav-link active">👥 Teams</a>
 <a href="individual.html" class="nav-link">📓 My Workbook</a>
 <a href="team-workbook.html" class="nav-link">📋 Team Workbook</a>
 <a href="readings.html" class="nav-link">📚 Readings</a>
 </div>
 </nav>
+<div class="back-bar"><a class="back-btn" href="index.html" onclick="if(document.referrer&&document.referrer.includes(location.hostname)){event.preventDefault();history.back()}">← Back</a></div>
 
 <div class="hero" style="padding:36px 24px 28px">
   <div class="badge">Session 2 · May 27</div>
@@ -176,10 +192,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Felicia Alw</td><td>Medical Biotechnology</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Dragoș Mihai Corcan</td><td>Neuroscience</td><td>UMF Iuliu Hațieganu Cluj-Napoca</td><td>PhD</td></tr><tr><td>Kübra Eren</td><td>Biomedical Engineering / Neuroengineering</td><td>Boğaziçi University</td><td>PhD</td></tr><tr><td>Ilenia Bonini</td><td>Autonomic Nervous System</td><td>Medical University Innsbruck</td><td>Master</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Felicia Alw</div><div class="member-name">👤 Dragoș Mihai Corcan</div><div class="member-name">👤 Kübra Eren</div><div class="member-name">👤 Ilenia Bonini</div></div>
   </div>
 </div>
 <div class="team-card">
@@ -191,10 +204,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Lars Baumann</td><td>Medical Engineering</td><td>KTH Stockholm</td><td>Master</td></tr><tr><td>Elena Richert</td><td>Psychology</td><td>Reykjavik University</td><td>PhD</td></tr><tr><td>Ana Chirakadze</td><td>Clinical Psychology & Cognitive Neuropsychology</td><td>Karolinska Institutet</td><td>Master</td></tr><tr><td>Andreea Mihaela Barb</td><td>Medicine</td><td>"Iuliu Hațieganu" University of Medicine</td><td>PhD</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Lars Baumann</div><div class="member-name">👤 Elena Richert</div><div class="member-name">👤 Ana Chirakadze</div><div class="member-name">👤 Andreea Mihaela Barb</div></div>
   </div>
 </div>
 <div class="team-card">
@@ -206,10 +216,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Clara Maria Azzano</td><td>Medical Engineering</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Noé Gouwy</td><td>Neuropsychology / Cognitive Sciences</td><td>Université de Lille</td><td>Master</td></tr><tr><td>Negar Kazemi</td><td>Molecular Medicine</td><td>Medical University of Innsbruck</td><td>Master</td></tr><tr><td>Márk Komóczi</td><td>Health Sciences</td><td>University of Debrecen</td><td>PhD</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Clara Maria Azzano</div><div class="member-name">👤 Noé Gouwy</div><div class="member-name">👤 Negar Kazemi</div><div class="member-name">👤 Márk Komóczi</div></div>
   </div>
 </div>
 <div class="team-card">
@@ -221,10 +228,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Saumya Roy</td><td>Data-Driven Health</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Sonia-Stefania Tivadar</td><td>Neuroscience</td><td>UMF "Iuliu Hațieganu" Cluj-Napoca</td><td>PhD</td></tr><tr><td>Alice Vaccaro</td><td>Psychology / Applied Behaviour Analysis</td><td>Université de Lille</td><td>Master</td></tr><tr><td>María Sanchez Bonmati</td><td>Pharmacy and Nutrition</td><td>UMH Universidad Miguel Hernández</td><td>PhD</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Saumya Roy</div><div class="member-name">👤 Sonia-Stefania Tivadar</div><div class="member-name">👤 Alice Vaccaro</div><div class="member-name">👤 María Sanchez Bonmati</div></div>
   </div>
 </div>
 <div class="team-card">
@@ -236,10 +240,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Lalith Rahul Murugan Palanisamy</td><td>Medical Engineering</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Zhe Xu</td><td>Innovative Technology for Healthy Living</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Fatemeh Safarmohammadloo</td><td>Neurosciences</td><td>University of Bonn</td><td>Master</td></tr><tr><td>Konstantin Popov</td><td>Sleep Medicine</td><td>Reykjavik University</td><td>PhD</td></tr><tr><td>Denisa Teodorescu</td><td>Medicine</td><td>Iuliu Hațieganu University of Medicine</td><td>PhD</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Lalith Rahul Murugan Palanisamy</div><div class="member-name">👤 Zhe Xu</div><div class="member-name">👤 Fatemeh Safarmohammadloo</div><div class="member-name">👤 Konstantin Popov</div><div class="member-name">👤 Denisa Teodorescu</div></div>
   </div>
 </div>
 <div class="team-card">
@@ -251,10 +252,7 @@ nav {
     </div>
   </div>
   <div class="team-body">
-    <table class="styled-table" style="margin-top:12px">
-      <thead><tr><th>Name</th><th>Field</th><th>University</th><th>Level</th></tr></thead>
-      <tbody><tr><td>Candela Martinez Rodriguez</td><td>Sports Technology</td><td>KTH Royal Institute of Technology</td><td>Master</td></tr><tr><td>Noah Vastmans</td><td>Sports Technology</td><td>KTH</td><td>Master</td></tr><tr><td>Aleksandr Maksimov</td><td>Neuroscience</td><td>University of Bonn</td><td>Master</td></tr><tr><td>Yagmur Can Altundas</td><td>Biomedical Engineering</td><td>Bogazici University</td><td>PhD</td></tr><tr><td>Larisa-Ioana Sabau</td><td>Medicine</td><td>Iuliu Hațieganu University of Medicine</td><td>PhD</td></tr></tbody>
-    </table>
+    <div class="member-list"><div class="member-name">👤 Candela Martinez Rodriguez</div><div class="member-name">👤 Noah Vastmans</div><div class="member-name">👤 Aleksandr Maksimov</div><div class="member-name">👤 Yagmur Can Altundas</div><div class="member-name">👤 Larisa-Ioana Sabau</div></div>
   </div>
 </div>
   </div>
